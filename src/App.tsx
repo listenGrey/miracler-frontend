@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Navigator from './layouts/Navigator';
+import TodayPage from './pages/TodayPage';
+import CalendarPage from './pages/CalendarPage';
+import NewPage from './pages/NewPage';
+import OverviewPage from './pages/OverviewPage';
+import ProfilePage from './pages/ProfilePage';
+
+type View = 'today' | 'calendar' | 'new' | 'overview' | 'profile';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [currentView, setCurrentView] = useState<View>('today');
+
+    const renderCurrentComponent = () => {
+        switch (currentView) {
+            case 'today':
+                return <TodayPage />;
+            case 'calendar':
+                return <CalendarPage />;
+            case 'new':
+                return <NewPage />;
+            case 'overview':
+                return <OverviewPage />;
+            case 'profile':
+                return <ProfilePage />;
+            default:
+                return <TodayPage />;
+        }
+    };
+
+    return (
+        <div className="app-container">
+            <div className="content">
+                {renderCurrentComponent()}
+            </div>
+            <Navigator currentView={currentView} onUpdateView={setCurrentView} />
+        </div>
+    );
 }
 
 export default App;
