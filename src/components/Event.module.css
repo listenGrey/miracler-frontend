@@ -1,0 +1,49 @@
+.event {
+    border-radius: 12px;
+    padding: 12px;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    transition: background 100ms ease-out;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 2px 4px 0px,
+    rgba(84, 72, 49, 0.08) 0px 0px 0px 1px;
+}
+
+.card {
+    position: relative;
+    width: auto;
+    display: flex;
+    padding: 8px 10px;
+    font-size: 14px;
+}
+
+.card input[type='checkbox'] {
+    margin-right: 10px;
+}
+
+.checkedLabel {
+    color: var(--color-text-light);
+    text-decoration: line-through;
+}
+

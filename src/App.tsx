@@ -1,40 +1,24 @@
-import { useState } from 'react';
-import Navigator from './layouts/Navigator';
-import TodayPage from './pages/TodayPage';
-import CalendarPage from './pages/CalendarPage';
-import NewPage from './pages/NewPage';
-import OverviewPage from './pages/OverviewPage';
-import ProfilePage from './pages/ProfilePage';
-
-type View = 'today' | 'calendar' | 'new' | 'overview' | 'profile';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './layouts/Layout';
+import Today from './features/today/Today';
+import Calendar from './features/calendar/Calendar';
+import New from './features/new/New';
+import Overview from './features/overview/Overview';
+import Profile from './features/profile/Profile';
 
 function App() {
-    const [currentView, setCurrentView] = useState<View>('today');
-
-    const renderCurrentComponent = () => {
-        switch (currentView) {
-            case 'today':
-                return <TodayPage />;
-            case 'calendar':
-                return <CalendarPage />;
-            case 'new':
-                return <NewPage />;
-            case 'overview':
-                return <OverviewPage />;
-            case 'profile':
-                return <ProfilePage />;
-            default:
-                return <TodayPage />;
-        }
-    };
-
     return (
-        <div className="app-container">
-            <div className="content">
-                {renderCurrentComponent()}
-            </div>
-            <Navigator currentView={currentView} onUpdateView={setCurrentView} />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Today />} />
+                    <Route path="calendar" element={<Calendar />} />
+                    <Route path="new" element={<New />} />
+                    <Route path="overview" element={<Overview />} />
+                    <Route path="profile" element={<Profile />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 

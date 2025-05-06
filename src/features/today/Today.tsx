@@ -1,76 +1,43 @@
-import { useState } from 'react';
-import Event from '../components/Event'; // 假设你也会用 React 写这个组件
+import { useEvents } from '../../hooks/useEvents';
+import Event from '../../components/Event';
+import styles from './Today.module.css';
 
-interface EventItem {
-    text: string;
-    checked: boolean;
-}
+function Today() {
+    const { events, updateEventItem } = useEvents();
 
-interface EventData {
-    id: number;
-    title: string;
-    items: EventItem[];
-}
+    const handlePostpone = () => {
+        alert('点击了「搁置」按钮（后续实现逻辑）');
+    };
 
-function TodayPage() {
-    const [events, setEvents] = useState<EventData[]>([
-        {
-            id: 1,
-            title: '事件1',
-            items: [
-                { text: '事项1-1', checked: false },
-                { text: '事项1-2', checked: false },
-            ],
-        },
-        {
-            id: 2,
-            title: '事件2',
-            items: [
-                { text: '事项2-1', checked: false },
-                { text: '事项2-2', checked: false },
-            ],
-        },
-        // ... 其他事件
-    ]);
-
-    const updateEventItem = (eventIdx: number, itemIdx: number, checked: boolean) => {
-        setEvents(prevEvents => {
-            const updatedEvents = [...prevEvents];
-            const updatedItems = [...updatedEvents[eventIdx].items];
-            updatedItems[itemIdx] = { ...updatedItems[itemIdx], checked };
-            updatedEvents[eventIdx] = { ...updatedEvents[eventIdx], items: updatedItems };
-            return updatedEvents;
-        });
+    const handleSettle = () => {
+        alert('点击了「结算」按钮（后续实现逻辑）');
     };
 
     return (
-        <div className="today-page">
-            {/* 顶部标题 */}
-            <div className="today-header">
+        <div className={styles.page}>
+            <div className={styles.header}>
                 <h1>今天</h1>
             </div>
 
-            {/* 中间事件内容 */}
-            <div className="today-events">
+            <div className={styles.scrollable}>
                 {events.map((event, eventIdx) => (
                     <Event
                         key={event.id}
                         title={event.title}
                         items={event.items}
-                        onUpdateItem={(itemIdx: number, checked: boolean) =>
+                        color={event.color}
+                        onUpdateItem={(itemIdx, checked) =>
                             updateEventItem(eventIdx, itemIdx, checked)
                         }
                     />
                 ))}
-
-                {/* 底部按钮 */}
-                <div className="today-summary">
-                    <div className="today-summary-button">搁置</div>
-                    <div className="today-summary-button">结算</div>
-                </div>
+            </div>
+            <div className={styles.summary}>
+                <div className={styles.button} onClick={handlePostpone}>搁置</div>
+                <div className={styles.button} onClick={handleSettle}>结算</div>
             </div>
         </div>
     );
 }
 
-export default TodayPage;
+export default Today;
