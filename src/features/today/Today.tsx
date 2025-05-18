@@ -3,7 +3,11 @@ import Event from '../../components/Event';
 import styles from './Today.module.css';
 
 function Today() {
-    const { events, updateEventItem } = useEvents();
+    const { events, loading, updateEventItem } = useEvents();
+
+    if (loading) {
+        return (<div>加载中...</div>);
+    }
 
     const handlePostpone = () => {
         alert('点击了「搁置」按钮（后续实现逻辑）');
